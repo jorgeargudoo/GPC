@@ -1,19 +1,19 @@
 import * as THREE from 'three';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {FBXLoader} from 'three/addons/loaders/FBXLoader.js';
-var medidas={largo:80,ancho:35,alto:20,inicio:-34,meta:32};
+var medidas={largo:110,ancho:45,alto:20,inicio:-43,meta:47};
 var figuras={muneca:{altura:4,giro:-Math.PI/2},arbol:{altura:8,giro:-Math.PI/5.5},guardias:{altura:2.3,giro:-Math.PI/2,separacion:4.5}};
 var ritmo={verdeMin:2,verdeMax:5,rojoMin:2,rojoMax:4,giro:0.7};
 var movimiento={altura:1.8,velocidad:5,salto:5.5,gravedad:12,giro:0};
-var ajustesLaser={radioJugador:0.3,radioHaz:0.035,lenta:0.24,rapida:1,inmunidad:1.6};
-var limitesEstrellas=[30,45,60,90];
-var datosLaser=[{x:medidas.inicio+12,lado:1,altura:0.48,alcance:medidas.ancho,amplitud:0.18,color:0xff3155,fase:0.2},{x:-8,lado:-1,altura:1.4,alcance:medidas.ancho*0.62,amplitud:0.34,color:0xff7a25,fase:2},{x:7,lado:-1,altura:0.48,alcance:medidas.ancho,amplitud:0.18,color:0xff3155,fase:1},{x:23,lado:1,altura:1.4,alcance:medidas.ancho*0.62,amplitud:0.3,color:0xff7a25,fase:3}];
+var ajustesLaser={radioJugador:0.3,radioHaz:0.035,lenta:0.24,rapida:0.75,inmunidad:1.6};
+var limitesEstrellas=[45,65,80,95];
+var datosLaser=[{x:-37,lado:-1,altura:1.4,alcance:medidas.ancho*0.62,amplitud:0.10,color:0xff7a25,fase:4},{x:-22,lado:1,altura:0.48,alcance:medidas.ancho,amplitud:0.12,color:0xff3155,fase:0.2},{x:-8,lado:-1,altura:1.4,alcance:medidas.ancho*0.62,amplitud:0.17,color:0xff7a25,fase:2},{x:7,lado:-1,altura:0.48,alcance:medidas.ancho,amplitud:0.12,color:0xff3155,fase:1},{x:23,lado:1,altura:1.4,alcance:medidas.ancho*0.62,amplitud:0.14,color:0xff7a25,fase:3},{x:38,lado:1,altura:0.48,alcance:medidas.ancho,amplitud:0.12,color:0xff3155,fase:2.5}];
 var renderizador,escena,camara;
 var reloj=new THREE.Clock();
 var cargadorGLB=new GLTFLoader();
 var cargadorFBX=new FBXLoader();
 var cargadorTexturas=new THREE.TextureLoader();
-var recursosPendientes=13;
+var recursosPendientes=16;
 var listo=false;
 var errorCarga='';
 var estadoPartida='cargando';
@@ -102,7 +102,6 @@ function cargarTextura(ruta){
     textura.colorSpace=THREE.SRGBColorSpace;
     return textura;
 }
-
 function cargarEscenario(){
     var posx=cargarTextura('./textures/entorno/posx.png');
     var negx=cargarTextura('./textures/entorno/negx.png');
@@ -132,15 +131,15 @@ function cargarEscenario(){
     var luzAmbiente=new THREE.AmbientLight(0xe5f3ff,1.5);
     escena.add(luzAmbiente);
     var sol=new THREE.DirectionalLight(0xfff0d6,2.2);
-    sol.position.set(-15,35,12);
+    sol.position.set(-30,65,25);
     sol.castShadow=true;
     sol.shadow.mapSize.set(2048,2048);
-    sol.shadow.camera.left=-50;
-    sol.shadow.camera.right=50;
-    sol.shadow.camera.top=50;
-    sol.shadow.camera.bottom=-50;
+    sol.shadow.camera.left=-80;
+    sol.shadow.camera.right=80;
+    sol.shadow.camera.top=80;
+    sol.shadow.camera.bottom=-80;
     sol.shadow.camera.near=1;
-    sol.shadow.camera.far=100;
+    sol.shadow.camera.far=180;
     sol.shadow.normalBias=0.04;
     sol.shadow.bias=-0.0001;
     escena.add(sol);
@@ -161,7 +160,6 @@ function ponerLinea(x,color,nombre){
     linea.receiveShadow=true;
     escena.add(linea);
 }
-
 function cargarModelos(){
     cargarFigura('./models/muneca/squid_game_doll.glb','muneca',figuras.muneca.altura,medidas.largo/2-4.1,0,figuras.muneca.giro);
     cargarFigura('./models/arbol/realistic_dead_tree.glb','arbol',figuras.arbol.altura,medidas.largo/2-3,0,figuras.arbol.giro);
@@ -170,8 +168,46 @@ function cargarModelos(){
     cargarArchivoJugador('./models/jugador/caminar.fbx',1);
     cargarArchivoJugador('./models/jugador/saltar.fbx',2);
     cargarArchivoJugador('./models/jugador/muerte.fbx',3);
+    cargarDecoracion('./models/casas/squid_game_house.glb','casa',8);
+    cargarDecoracion('./models/roble/oak_tree.glb','roble',16);
+    cargarDecoracion('./models/arbusto/green_bush.glb','arbusto',1);
 }
-
+function cargarDecoracion(ruta,nombre,altura){
+    cargadorGLB.load(ruta,function(archivo){
+        var grupo=prepararModelo(archivo.scene,altura);
+        var posiciones=[];
+        if(nombre=='casa'){
+            for(var i=-1;i<=1;i++){
+                posiciones.push({x:-medidas.largo/2,z:i*12,giro:Math.PI/2,escala:1});
+            }
+        }
+        if(nombre=='roble'){
+            var x=medidas.largo/2-2;
+            var z=medidas.ancho/2-2;
+            posiciones=[{x:-x,z:-z,giro:0.3,escala:1},{x:-x,z:z,giro:1.8,escala:1.05},{x:x,z:-z,giro:-0.7,escala:0.95},{x:x,z:z,giro:2.6,escala:1.02}];
+        }
+        if(nombre=='arbusto'){
+            var esquinas=[{x:-1,z:-1},{x:-1,z:1},{x:1,z:-1},{x:1,z:1}];
+            var grupos=[[{x:-1,z:-1,altura:3.1,giro:0.2},{x:2,z:0,altura:2.2,giro:1.4},{x:0,z:2.5,altura:2.7,giro:2.5},{x:3.5,z:2,altura:1.7,giro:0.8}],[{x:-1,z:-1,altura:2.6,giro:1},{x:1.5,z:0,altura:3.2,giro:2.2},{x:0,z:2,altura:1.8,giro:0.4},{x:3,z:1,altura:2.4,giro:2.8},{x:1.5,z:4,altura:2.1,giro:1.7},{x:4,z:3.5,altura:1.6,giro:0.1}],[{x:-1,z:-1,altura:3.4,giro:2.4},{x:2,z:0,altura:2.6,giro:0.5},{x:0,z:3,altura:2,giro:1.9},{x:3.5,z:2,altura:1.8,giro:2.9},{x:2,z:4,altura:2.3,giro:0.9}],[{x:-1,z:-1,altura:2.8,giro:0.6},{x:1,z:0,altura:2,giro:2.1},{x:0,z:2,altura:3.3,giro:1.1},{x:3,z:1,altura:2.5,giro:2.7},{x:1.5,z:3.5,altura:1.9,giro:0.1},{x:4,z:3,altura:2.2,giro:1.6},{x:3,z:5,altura:1.5,giro:2.3}]];
+            for(var i=0;i<esquinas.length;i++){
+                for(var j=0;j<grupos[i].length;j++){
+                    var dato=grupos[i][j];
+                    posiciones.push({x:esquinas[i].x*(medidas.largo/2-2-dato.x),z:esquinas[i].z*(medidas.ancho/2-2-dato.z),giro:dato.giro,escala:dato.altura});
+                }
+            }
+        }
+        for(var i=0;i<posiciones.length;i++){
+            var dato=posiciones[i];
+            var copia=grupo.clone();
+            copia.name=nombre+'_'+i;
+            copia.position.set(dato.x,0,dato.z);
+            copia.rotation.y=dato.giro;
+            copia.scale.setScalar(dato.escala);
+            escena.add(copia);
+        }
+        recursoCargado();
+    });
+}
 function cargarFigura(ruta,nombre,altura,x,z,giro){
     cargadorGLB.load(ruta,function(archivo){
         try{
