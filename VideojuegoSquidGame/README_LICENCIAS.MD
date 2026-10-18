@@ -14,7 +14,7 @@ Para crear el escenario y los personajes he utilizado modelos 3D publicados en *
 - **Uso en el proyecto:** árbol situado detrás de la muñeca.
 - **Ajustes realizados:** escala, posición y orientación dentro de la escena.
 
-Este modelo tiene una licencia distinta de las Creative Commons enumeradas a continuación. Su utilización y redistribución dependen de las condiciones de Sketchfab Standard; este README no amplía sus permisos.
+Este modelo tiene una licencia distinta de las Creative Commons enumeradas a continuación. Su utilización y redistribución dependen de las condiciones de Sketchfab Standard.
 
 ### 2. Squid Game: PinkSoldier Triangle (soldados)
 
@@ -45,9 +45,7 @@ Las animaciones obtenidas mediante Mixamo están sujetas a las condiciones de es
 - **Uso en el proyecto:** muñeca del juego «Luz roja, luz verde».
 - **Integración realizada:** ajustes de escala, posición y orientación, y control mediante código de las pistas y de los momentos de reproducción de la animación incluida en el modelo.
 
-Se conserva el archivo `.glb` original. Durante la ejecución, el programa selecciona pistas de la animación para controlar por separado los gestos de la cabeza y de la boca.
-
-La licencia incluye condiciones de atribución, uso no comercial y ausencia de obras derivadas compartidas. **Conservar el archivo original no demuestra por sí solo que cualquier integración o tratamiento de sus animaciones esté permitido.** Este README no acredita una autorización adicional del autor para distribuir adaptaciones; si la integración constituye una adaptación sujeta a esa restricción, se necesita un permiso adicional para compartirla.
+Se conserva el archivo `.glb` original. Durante la ejecución, el programa selecciona pistas de la animación para controlar por separado los gestos de la cabeza y de la boca. La licencia incluye condiciones de atribución, uso no comercial y ausencia de obras derivadas compartidas.
 
 ### 5. Oak Tree (robles de las esquinas)
 
@@ -80,13 +78,9 @@ La licencia incluye condiciones de atribución, uso no comercial y ausencia de o
 
 Los modelos se han incluido para formar parte del videojuego y visualizarse durante una partida. No me atribuyo su creación ni los ofrezco como una colección de modelos propia.
 
-Cada modelo mantiene su licencia. Los recursos identificados como **CC BY 4.0** permiten compartir y adaptar el material bajo sus condiciones, incluyendo reconocer la autoría, enlazar la licencia e indicar los cambios realizados. Los créditos no implican que sus autores respalden este proyecto. No se añaden restricciones que limiten los permisos concedidos por esas licencias.
+Cada modelo mantiene su licencia. Los recursos identificados como **CC BY 4.0** permiten compartir y adaptar el material bajo sus condiciones, incluyendo reconocer la autoría, enlazar la licencia e indicar los cambios realizados. No se añaden restricciones que limiten los permisos concedidos por esas licencias.
 
-El árbol de la muñeca está sujeto a **Sketchfab Standard** y la muñeca a **CC BY-NC-ND 4.0**. No deben tratarse como si tuvieran los mismos permisos que los modelos CC BY 4.0.
-
-Los archivos alojados en un repositorio público pueden ser descargados por otras personas. La intención académica del proyecto y la inclusión de créditos no sustituyen los permisos necesarios para publicar esos archivos o distribuir adaptaciones.
-
-Este repositorio no cambia las licencias de terceros. Para utilizar un recurso en otro proyecto, debe consultarse su fuente original y cumplir su licencia. Este documento recoge los créditos y las condiciones identificadas; **no constituye una autorización general de los titulares ni garantiza por sí solo que todos los usos estén permitidos**.
+Este repositorio no cambia las licencias de terceros. Para utilizar un recurso en otro proyecto, debe consultarse su fuente original y cumplir su licencia.
 
 ## Referencia a *Squid Game* y Netflix
 
