@@ -47,7 +47,7 @@ function init()
 
   cameraTop = new THREE.OrthographicCamera(-100, 100, 100, -100, 0.1, 1000);
   cameraTop.position.set(0, 300, 0);
-  cameraTop.up.set(1, 0, 0);
+  cameraTop.up.set(-1, 0, 0);
   cameraTop.lookAt(new THREE.Vector3(0, 0, 0));
 
   cameraControls = new THREE.OrbitControls( camera, renderer.domElement );
@@ -208,6 +208,7 @@ function loadScene()
 
     pinzaIz = new THREE.Object3D();
     pinzaIz.position.x = -12;
+	pinzaIz.rotation.y = Math.PI;
     pinza.add(pinzaIz);
 
     let geometriaSoporte = new THREE.BoxGeometry(4, 20, 19);
@@ -270,6 +271,7 @@ function loadScene()
 
     pinzaDe = new THREE.Object3D();
     pinzaDe.position.x = 12;
+	pinzaDe.rotation.y = Math.PI;
     pinza.add(pinzaDe);
 
     let soporteDe = new THREE.Mesh(geometriaSoporte, materialPinzas);
