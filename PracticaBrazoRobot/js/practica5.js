@@ -455,7 +455,7 @@ function update()
     antebrazo.rotation.y = controls.giroAntebrazoY / 180 * Math.PI;
     antebrazo.rotation.z = controls.giroAntebrazoZ / 180 * Math.PI;
 
-    pinza.rotation.z = controls.giroPinza / 180 * Math.PI;
+    pinza.rotation.x = controls.giroPinza / 180 * Math.PI;
 
     pinzaIz.position.x = -2 - controls.separacionPinza * 10 / 15;
     pinzaDe.position.x = 2 + controls.separacionPinza * 10 / 15;
